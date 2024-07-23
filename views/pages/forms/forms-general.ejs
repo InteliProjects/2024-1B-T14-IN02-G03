@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abandono Zero</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }       
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #325538;
+            background-color: #fff8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position:relative;
+            width: 100%;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 290%;
+            background-image: url('./images/2.svg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center; 
+            opacity: 0.1; 
+            z-index: 0;
+        }
+
+        header {
+            background-color: #FaeFEF;    
+            padding: 0.75%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #325538;
+            position:fixed;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 1.9em;
+            color: #325538;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 73%;
+            padding: 20px;
+            margin-top: 2.5%; 
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            position: fixed;
+            top: 0%;
+            left: 0;
+            height: 8px;
+            z-index: 99;
+            color: #325538;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #325538;
+            width: 0%;
+            color: #325538;
+        }
+
+        .form-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0.9%;
+            background-color: #F3F0E2;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2%;
+            border-radius: 5px;
+            flex-grow: 1;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 3%;
+            color:#233325
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 1%;
+            color: #233325;
+        }
+
+        .form-group input[type="text"], 
+        .form-group input[type="radio"], 
+        .form-group input[type="checkbox"] {
+            margin-right: 1%;
+            color:#4F5C4F;
+            font-size:1em;
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            height: 80%;
+            padding: 0.2%;
+            border: 0px solid #325538;
+            border-radius: 5px;
+            background-color: #fffff8;
+            color: #325538;
+        }
+
+        .form-group input[type="text"]:focus {
+            border-color: #44804E;
+            outline: none;
+            background-color: #fffff8;
+        }
+
+        .form-group input[type="radio"]{
+            justify-content: flex-start; 
+            transform: scale(1.5);
+        }
+
+        .form-group .options {
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; 
+        }
+
+        .form-group .options label {
+            display: flex;
+            align-items: center;
+        }
+
+
+        .form-group .options label span {
+            margin-left: 0.5%;
+            color: #4F5C4F;
+        }
+
+        .send-button {
+            width: 10%;
+            padding: 1%;
+            height: 2%;
+            font-size: 1em;
+            background-color: #44804E;
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            transition: background-color 0.3s;
+            transition: box-shadow 0.3s;
+            transform: scale(1);
+            box-shadow: 0px 0px 0px 0px #000000;
+            
+        }
+
+        .buttonenv:hover {
+            transform: scale(1.1);
+            background-color: #2c4c3c;
+        } 
+
+         .slider-container {
+            width: 80%;
+            margin: 20px 0;
+            text-align: center; 
+
+            input[type="range"] {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 95%;
+                height: 10px;
+                background: transparent;
+                cursor: pointer;
+                outline: none;
+            }
+
+            input[type="range"]::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 10px;
+                background: linear-gradient(to right, #4A7757 0%, #4A7757 var(--value), #FFFFF8 var(--value), #FFFFF8 100%) !important;
+                border-radius: 5px;
+            }
+
+
+            input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 25px;
+                height: 25px;
+                background-color: #FAF5EF;
+                background-image: url('./images/paw.png');
+                cursor: pointer;
+                border-radius: 50%;
+                margin-top: -5px;
+            }
+        } 
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #4F5C4F;
+
+            span {
+                width: calc(100%/11);
+            }
+        }
+
+        .slider {
+            width: 100%;
+            height: 10px;
+            background: #FAF5EF;
+            
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.89;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-size: contain;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 1px;
+        }
+        
+        .click{
+            display: none;
+        }
+
+        input[type="radio"] + .click{
+            display: none;
+        }
+
+        .button-resp {
+            background-color: #fffff8;
+            padding: 1% 10%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+            white-space: nowrap; 
+        }
+
+        input[type="radio"]:checked + .button-resp {
+            border-radius: 10px;
+            background-color: #4A7757; 
+            color: #ffffff; 
+        }
+
+        .date{
+            width: 100%;
+            border-radius: 10px;
+            border: 3px solid #fffff8;
+            background-color: #fffff8;
+
+        }
+
+        .data:focus{
+            color: #325538;
+        }
+        
+        .select{
+            width: 100%;
+            border-radius: 10px;
+            border: 3px solid #fffff8;
+            background-color: #fffff8;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Define um contêiner para agrupar as informações do forms-->
+    <div class="progress-container">
+        <!-- Barra de progresso -->
+        <div style="background-color: #325538;" class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main>
+        <div class="form-container">
+            <div class="form-group">
+                <label for="dob">Data de nascimento</label>
+                <input class="date" type="date" id="dob" name="dob">
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="education">Educação</label>
+                <select class="select" id="education" name="education">
+                    <option value="" selected disabled hidden>Selecione uma opção</option>
+                    <option value="ensino_fundamental">Ensino Fundamental</option>
+                    <option value="ensino_medio">Ensino Médio</option>
+                    <option value="ensino_superior">Ensino Superior</option>
+                    <option value="prefer_not_to_mention">Prefiro não mencionar</option>
+                </select>
+            </div>    
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="gender">Gênero</label>
+                    <select class="select" id="gender" name="gender">
+                        <option value="" selected disabled hidden>Selecione uma opção</option>
+                        <option value="male">Masculino</option>
+                        <option value="female">Feminino</option>
+                        <option value="neutral">Neutro</option>
+                        <option value="prefer_not_to_mention">Prefiro não mencionar</option>
+                    </select>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="housingType">Tipo de moradia</label>
+                <select class="select" id="housingType" name="housingType">
+                    <option value="" selected disabled hidden>Selecione uma opção</option>
+                    <option value="house">Casa</option>
+                    <option value="apartment">Apartamento</option>
+                    <option value="rural_property">Imóvel Rural</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="familyStructure">Constituição familiar residindo na mesma casa</label>
+                <select class="select" id="familyStructure" name="familyStructure">
+                    <option value="" selected disabled hidden>Selecione uma opção</option>
+                    <option value="single">Solteiro</option>
+                    <option value="singleWithFriends">Solteiro que vive com amigos</option>
+                    <option value="coupleWithoutKids">Casal sem filhos humanos (Hetero ou Homo)</option>
+                    <option value="coupleWithYoungChildren">Casal com filhos pequenos (Hetero ou Homo)</option>
+                    <option value="coupleWithTeenageChildren">Casal com filhos Adolescentes (Hetero ou Homo)</option>
+                    <option value="coupleWithAdultChildren">Casal com filhos adultos (Hetero ou Homo)</option>
+                    <option value="singleMotherOrFather">Mãe/Pai solteiro</option>
+                    <option value="elderlyCouple">Casal idoso (70+)</option>
+                    <option value="elderlyCoupleWithAdultChildren">Casal Idoso (70+) com filhos adultos</option>
+                    <option value="elderlyAlone">Idoso sozinho</option>
+                    <option value="elderlyWithChildren">Idoso com filhos</option>
+                </select>
+            </div>    
+        </div>
+
+
+        <div class="form-container">
+            <div class="form-group">
+                <label>Faixa de renda familiar mensal</label>
+                <div role="group" aria-label="Vertical radio toggle button group">
+                    <input type="radio" class="click" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" value="Até R$ 1.412">
+                    <label class="button-resp" for="vbtn-radio1">Até R$ 1.412</label>
+                    <input type="radio" class="click" name="vbtn-radio" id="vbtn-radio2" autocomplete="off" value="De 1.412 até 4.236">
+                    <label class="button-resp" for="vbtn-radio2">De 1.412 até 4.236</label>
+                    <input type="radio" class="click" name="vbtn-radio" id="vbtn-radio3" autocomplete="off" value="De 4.236 até 8.472">
+                    <label class="button-resp" for="vbtn-radio3">De 4.236 até 8.472</label>
+                    <input type="radio" class="click" name="vbtn-radio" id="vbtn-radio4" autocomplete="off" value="De 8.472 até 12.708">
+                    <label class="button-resp" for="vbtn-radio4">De 8.472 até 12.708</label>
+                    <input type="radio" class="click" name="vbtn-radio" id="vbtn-radio5" autocomplete="off" value="Acima de 12.708">
+                    <label class="button-resp" for="vbtn-radio5">Acima de 12.708</label>
+                </div>
+            </div>    
+        </div>
+
+        <div class="form-container">
+            <label>Quantas pessoas vivem na sua casa?</label>
+            <div class="slider-container">
+                <input type="range" min="1" max="5" value="3" class="slider" id="peopleSlider">
+                <div class="slider-labels">
+                </span><span>1</span><span>2</span><span>3</span><span>4</span><span>5+</span>
+                </div>
+            </div>        
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="country">País</label>
+                <input class="input-label" type="text" id="country" name="country" data-text-standardize maxlength="20">
+            </div>    
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="state">Estado</label>
+                <input class="input-label" type="text" id="state" name="state" data-text-standardize maxlength="20">
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="city">Cidade</label>
+                <input class="input-label" type="text" id="city" name="city" data-text-standardize maxlength="20">
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="neighborhood">Bairro</label>
+                <input class="input-label" type="text" id="neighborhood" name="neighborhood" data-text-standardize maxlength="20">
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group radio-text">
+                <label for="message">Com qual das opções você mais se identifica?</label>
+                <div role="group" aria-label="Vertical radio toggle button group">
+                    <input type="radio" class="click" name="choice-of-form" id="had-forms" value="had" autocomplete="off">
+                    <label class="button-resp" for="had-forms">Já tive cachorro</label>
+
+                    <input type="radio" class="click" name="choice-of-form" id="have-forms" value="have" autocomplete="off">
+                    <label class="button-resp" for="have-forms">Tenho cachorro</label>
+
+                    <input type="radio" class="click" name="choice-of-form" id="want-forms" value="want" autocomplete="off">
+                    <label class="button-resp" for="want-forms">Quero ter um cachorro</label>
+
+                    <input type="radio" class="click" name="choice-of-form" id="null-forms" value="null" autocomplete="off">
+                    <label class="button-resp" for="null-forms">Não quero ter cachorro</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="send-button" id="sendButton">Enviar</button>
+    </main>
+    <script>
+         window.onscroll = function() {updateProgressBar()};
+        /**
+         * Atualiza a barra de progresso com base no scroll da página.
+         */
+        function updateProgressBar() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        }
+
+
+
+        const rangeInputs = document.querySelectorAll('#peopleSlider');
+        /**
+         * Atualiza o plano de fundo de um elemento de faixa (range) com base no valor selecionado.
+         * @param {HTMLElement} element - O elemento de faixa (range) a ser atualizado.
+         */
+        function updateRangeBackground(element) {
+            const value = (element.value - element.min) / (element.max - element.min) * 100;
+            element.style.setProperty('--value', value + '%');
+        }
+
+        rangeInputs.forEach(input => {
+            input.addEventListener('input', () => updateRangeBackground(input));
+            // Chamada inicial para definir o background ao carregar a página
+            updateRangeBackground(input);
+        });
+
+
+
+        // Seleção dos elementos de entrada do tipo rádio:
+        document.querySelectorAll('.button-group input[type="radio"]').forEach(radio => {
+            // Utiliza o método forEach para iterar sobre todos os elementos de entrada do tipo rádio selecionados.
+            radio.addEventListener('change', function() {
+                // Para cada elemento de entrada do tipo rádio, adiciona um ouvinte de evento (event listener) que dispara quando o valor do botão de rádio é alterado (ou seja, quando um botão de rádio diferente é selecionado).
+                document.querySelectorAll('.button-group .button-resp').forEach(label => {
+                    if (label.htmlFor === this.id) {
+                        label.style.backgroundColor = '#4A7757';
+                        label.style.color = '#ffffff';
+                    } else {
+                        label.style.backgroundColor = '#fffff8';
+                        label.style.color = '#325538';
+                    }
+                });
+            });
+        });
+    </script>
+    </main>
+</body>
+</html>

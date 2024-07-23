@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard do Administrador</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            /* Divide em duas colunas iguais */
+            gap: 20px;
+            /* Espaçamento entre as colunas */
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #325538;
+            text-align: center;
+            margin-bottom: 20px;
+            grid-column: span 2;
+            /* Ocupa as duas colunas */
+        }
+
+        h5 {
+            font-size: 18px;
+            color: #325538;
+            margin-bottom: 10px;
+        }
+
+        .btn-group .btn {
+            background-color: #325538;
+            color: #fff;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .btn-group .btn:focus {
+            box-shadow: none;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #325538;
+            color: #fff;
+            border-radius: 4px 4px 0 0;
+            font-size: 16px;
+            padding: 10px 15px;
+        }
+
+        .card-body {
+            background-color: #f5f4ef;
+            padding: 15px;
+        }
+
+        #chart {
+            margin-top: 20px;
+        }
+
+        .data-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .data-list li {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .data-list li:last-child {
+            border-bottom: none;
+        }
+
+        .data-list li span {
+            font-weight: bold;
+            color: #325538;
+            margin-right: 10px;
+            flex-shrink: 0;
+            /* Não deixa o span encolher */
+        }
+
+        .data-list li div {
+            flex-grow: 1;
+            /* Permite que o conteúdo do div se expanda */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Respostas dos Formulários</h1>
+
+        <!-- Botões para seleção de formulários -->
+        <div class="btn-group">
+            <button class="btn" onclick="carregarListaDadosHadForms()">Teve Cachorro</button>
+            <button class="btn" onclick="carregarListaDadosHaveForms()">Tem Cachorro</button>
+            <button class="btn" onclick="carregarListaDadosWantForms()">Quer Ter Cachorro</button>
+            <button class="btn" onclick="carregarListaDadosNullForms()">Não Quer Ter Cachorro</button>
+            <button class="btn" id="downloadButton" onclick="baixarDadosFormulario()" disabled>Baixar Dados</button>
+        </div>
+
+        <!-- Título para quantidade respondida -->
+        <h5>Quantidade respondida por tipo de formulário</h5>
+
+        <!-- Gráfico de pizza -->
+        <div id="chart"></div>
+        <!-- Lista de respostas detalhadas -->
+        <div class="card">
+            <div class="card-header">
+                Respostas Detalhadas
+            </div>
+            <div class="card-body">
+                <ul class="data-list" id="responsesList">
+                    <!-- Itens da lista serão preenchidos via JavaScript -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card para exibir dados dos formulários -->
+    <div class="card">
+        <div class="card-header">
+            Dados do Formulário
+        </div>
+        <div class="card-body" id="formContainer">
+            <!-- Lista de dados será preenchida via JavaScript -->
+        </div>
+    </div>
+
+
+
+    <!-- Script para renderizar o gráfico de pizza com ApexCharts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/admin/form-responses')
+                .then(response => response.json())
+                .then(data => {
+                    var options = {
+                        chart: {
+                            type: 'pie',
+                            height: 350
+                        },
+                        series: [data.have, data.had, data.want, data.null],
+                        labels: ['Have Forms', 'Had Forms', 'Want Forms', 'Null Forms'],
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }]
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#chart"), options);
+                    chart.render();
+
+                    // Preencher lista de respostas detalhadas
+                    var responsesList = document.getElementById('responsesList');
+                    var responses = [
+                        { type: 'Have Forms', count: data.have },
+                        { type: 'Had Forms', count: data.had },
+                        { type: 'Want Forms', count: data.want },
+                        { type: 'Null Forms', count: data.null }
+                    ];
+
+                    responses.forEach(response => {
+                        var li = document.createElement('li');
+                        li.innerHTML = `<span>${response.type}:</span> ${response.count}`;
+                        responsesList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>

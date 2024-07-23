@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abandono Zero</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #325538;
+            background-color: #fff8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 100%;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('./images/2.svg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 73%;
+            padding: 20px;
+            margin-top: 2.5%;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            position: fixed;
+            top: 0%;
+            left: 0;
+            height: 8px;
+            z-index: 99;
+            color: #325538;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #325538;
+            width: 0%;
+            color: #325538;
+        }
+
+        .form-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0.9%;
+            background-color: #F3F0E2;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2%;
+            border-radius: 5px;
+            flex-grow: 1;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 3%;
+            color: #233325
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 1%;
+            color: #233325;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="radio"],
+        .form-group input[type="checkbox"] {
+            margin-right: 20%;
+            color: #4F5C4F;
+            font-size: 1em;
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            height: 80%;
+            padding: 0.2%;
+            border: 0px solid #325538;
+            border-radius: 5px;
+            background-color: #fffff8;
+            color: #325538;
+        }
+
+        .form-group input[type="text"]:focus {
+            border-color: #44804E;
+            outline: none;
+            background-color: #fffff8;
+        }
+
+        .form-group .options {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .submit {
+            width: 10%;
+            height: 20%;
+            font-size: 1em;
+            background-color: #44804E;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            transition: background-color 0.3s;
+            transition: box-shadow 0.3s;
+            transform: scale(1);
+            box-shadow: 0px 0px 0px 0px #000000;
+
+        }
+
+        .buttonenv:hover {
+            transform: scale(1.1);
+            background-color: #2c4c3c;
+        }
+    </style>
+
+<body>
+    <!-- Define um contêiner para agrupar as informações do forms-->
+    <div class="progress-container">
+        <!-- Barra de progresso -->
+        <div style="background-color: #325538;" class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main>
+        <form id="forms_null" class="needs-validation" novalidate>
+            <div class="form-container">
+                <div class="form-group">
+                    <label>Por que você não deseja conviver com cães?</label>
+                    <input type="text" class="form-control" id="resposta" name="resposta" placeholder="Sua resposta" required maxlength="250">
+                </div>
+            </div>
+        
+            <!-- Campo oculto para owner -->
+            <input type="hidden" id="owner" name="owner" value=1>
+        
+            <button type="submit" id="submit" class="submit">Enviar</button>
+        </form>
+    </main>
+    <script>
+        window.onscroll = function () { updateProgressBar() };
+
+        function updateProgressBar() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        }
+
+        document.getElementById('forms_null').addEventListener('submit', function (event) {
+            var inputs = document.querySelectorAll('.form-control');
+            var allFilled = true;
+
+            inputs.forEach(function (input) {
+                if (!input.value) {
+                    allFilled = false;
+                    input.style.borderColor = 'red';
+                } else {
+                    input.style.borderColor = '#325538';
+                }
+            });
+
+            if (!allFilled) {
+                event.preventDefault();
+                alert("Por favor, responda a todas as perguntas.");
+            }
+        });
+    </script>
+    
+</body>
+
+</html>

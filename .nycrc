@@ -1,0 +1,6 @@
+{
+    "include": ["api/controllers/**/create/*.js"],
+    "exclude": ["test/**/*.js"],
+    "reporter": ["html", "text"],
+    "all": true
+  }

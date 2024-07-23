@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crie sua Conta</title>
+    <style>
+
+        .navbar {
+        background-color: #F0ECDC; /* Cor de fundo da navbar */
+        overflow: hidden;
+        }
+
+        .navbar a {
+        float: left;
+        color: #325538; /* Cor do texto da navbar */
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        }
+
+        .navbar a:hover {
+        background-color: #ddd; /* Cor de fundo ao passar o mouse */
+        color: black; /* Cor do texto ao passar o mouse */
+        border-radius: 10px;
+        }
+
+        .login {
+            background-color: #ffffff;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .cadastro {
+            background-color: #faf9f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+            }
+        }
+        .form-container {
+            padding: 20px;
+            width: 100%;
+        }
+        @media (min-width: 768px) {
+            .form-container {
+                flex: 1;
+            }
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+        .image-container {
+            width: 10%;
+            height: 100px;
+        }
+        @media (min-width: 768px) {
+            .image-container {
+                flex: 1;
+                height: auto;
+            }
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .btn-custom {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #218838;
+        }
+        .link-login {
+            color: #007bff;
+        }
+        .link-login:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a style="cursor: pointer;" class="navbar-brand mr-0" href="/"><img style="height: 35px;" class="logo" alt="NEW_APP_NAME logo" src="/images/abandono-zero.png"/></a>
+        <div class="login">
+            <a href="/generalForms" class="iniciar-forms">Acessar Forms Geral</a>
+        </div>
+        <div class="login">
+            <a href="/signup" class="iniciar-forms">Sign Up</a>
+        </div>
+    </div>
+    <div class="cadastro">
+        <div class="container">
+            <div class="form-container">
+                <h2>Login</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="senha">Senha:</label>
+                        <input type="password" class="form-control" id="senha" placeholder="Senha">
+                    </div>
+                    <button type="submit" class="btn btn-custom btn-block" href="/generalForms">Login</button>
+                    <p class="mt-3">Ainda não tem uma conta?<span></span> <span></span><a href="/auth/login">Login com Auth0</a></p>
+                </form>
+            </div>
+            <div class="image-container">
+                <img src="/images/dogCadastro.png" alt="Dog Image">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

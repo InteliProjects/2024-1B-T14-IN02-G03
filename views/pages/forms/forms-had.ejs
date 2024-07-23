@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Seleção</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #325538;
+            background-color: #fff8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 100%;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 770%;
+            background-image: url('./images/2.svg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            padding: 2%;
+            margin-top: 2.5%; 
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            position: fixed;
+            top: 0%;
+            left: 0;
+            height: 8px;
+            z-index: 99;
+            color: #325538;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #325538;
+            width: 0%;
+            color: #325538;
+        }
+
+        .form-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            /* justify-content: center; */
+            padding: 0.9%;
+            background-color: #F3F0E2;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2%;
+            padding-right: 6%;
+            border-radius: 5px;
+            flex-grow: 1;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 3%;
+            color: #233325;
+        }
+
+        .form-group label {
+            margin-left: 2.5%;
+            display: block;
+            margin-bottom: 1%;
+            color: #233325;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="radio"],
+        .form-group input[type="checkbox"] {
+            margin-right: 1%;
+            color: #4F5C4F;
+            font-size: 1em;
+        }
+
+        .form-group input[type="text"] {
+            height: cover;
+            width: 90%;
+            margin-left: 5%;
+            padding: 0.2%;
+            border: 0px solid #325538;
+            border-radius: 5px;
+            background-color: #fffff8;
+            color: #325538;
+        }
+
+        .form-group input[type="text"]:focus {
+            border-color: #44804E;
+            outline: none;
+            background-color: #fffff8;
+        }
+
+        .form-group input[type="radio"] {
+            justify-content: flex-start;
+            transform: scale(1.5);
+        }
+
+        .form-group .options {
+            padding-left: 4.5%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .form-group .options label {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group .options label span {
+            margin-left: 0.5%;
+            color: #4F5C4F;
+        }
+
+        .buttonenv {
+            width: 80px;
+            padding: 1%;
+            height: 1%;
+            font-size: 1em;
+            background-color: #44804E;
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            transition: background-color 0.3s;
+            transition: box-shadow 0.3s;
+            transform: scale(1);
+            box-shadow: 0px 0px 0px 0px #000000;
+        }
+
+        .buttonenv:hover {
+            transform: scale(1.1);
+            background-color: #2c4c3c;
+        }
+
+        .slider-container {
+            width: 98%;
+            margin: 3%;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .slider-container input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 95%;
+            height: 10px;
+            background: transparent;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, #4A7757 0%, #4A7757 var(--value), #FFFFF8 var(--value), #FFFFF8 100%) !important;
+            border-radius: 5px;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background-color: #FAF5EF;
+            background-image: url('./images/paw.png');
+            cursor: pointer;
+            border-radius: 50%;
+            margin-top: -5px;
+        }
+
+        .slider-labels {
+            width: 103.5%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #4F5C4F;
+        }
+
+        .slider-labels span {
+            width: calc(100% / 11);
+        }
+
+        .slider {
+            width: 100%;
+            height: 10px;
+            background: #FAF5EF;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.89;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-size: contain;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 1px;
+        }
+
+        .click {
+            display: none;
+        }
+
+        input[type="radio"]+.click {
+            display: none;
+        }
+
+        .button-resp {
+            background-color: #fffff8;
+            padding: 1% 10%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .button-options {
+            padding-left: 2%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        input[type="radio"]:checked+.button-resp {
+            border-radius: 10px;
+            background-color: #4A7757;
+            color: #ffffff;
+        }
+
+        .button-resp-maior {
+            background-color: #fffff8;
+            width: 93%;
+            height: cover;
+            padding: 1%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 2px solid transparent;
+            text-align: left;
+            white-space: normal;
+        }
+
+        input[type="radio"]:checked+.button-resp-maior {
+            border-radius: 10px;
+            background-color: #4A7757;
+            color: #ffffff;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="progress-container">
+        <div style="background-color: #325538;" class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main>
+        <form id="had-form">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="dog-name" required>Qual era o nome do cachorro?</label>
+                    <input type="text" class="form-control" id="dogs_name" name="dogs_name" required maxlength="50">
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label>A quem ele pertenceu?</label>
+                    <div class="button-group">
+                        <input type="radio" id="ownership-voce" name="belonged_to_you" value="ownership-voce" class="click">
+                        <label class="button-resp" for="ownership-voce">Você</label>
+                        <input type="radio" id="ownership-family" name="belonged_to_you" value="ownership-family" class="click">
+                        <label class="button-resp" for="ownership-family">Familiar</label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="description" required>Como você descreve a personalidade desse cão?</label>
+                    <input type="text" class="form-control" id="dogs_personality" name="dogs_personality" required  maxlength="250"></input>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="time">Ele esteve com você durante quantos anos?</label>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="11" step="1" value="7" class="slider" id="time_with_you" name="time_with_you">
+                        <div class="slider-labels" required>
+                            <span>&lt;1</span>
+                            <span>1</span>
+                            <span>2</span>
+                            <span>3</span>
+                            <span>4</span>
+                            <span>5</span>
+                            <span>6</span>
+                            <span>7</span>
+                            <span>8</span>
+                            <span>9</span>
+                            <span>10&gt;</span>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="first-dog">Foi seu primeiro cão?</label>
+                    <div class="button-group">
+                        <input type="radio" name="first_dog" value="first-dog-nao" id="first-dog-nao" class="click">
+                        <label class="button-resp" for="first-dog-nao">Não</label>
+                        <input type="radio" name="first-_og" value="first-dog-sim" id="first-dog-sim" class="click">
+                        <label class="button-resp" for="first-dog-sim">Sim</label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="dogs">Quantos outros pets tinha na casa?</label>
+                    <div class="options">
+                        <label>Cães:</label>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="5" step="1" value="2" class="slider" id="dog_pets" name="dog_pets">
+                            <div class="slider-labels">
+                                <span>0</span>
+                                <span>1</span>
+                                <span>2</span>
+                                <span>3</span>
+                                <span>4</span>
+                                <span>5&gt;</span>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="options">
+                        <label>Gatos:</label>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="5" step="1" value="2" class="slider" id="cat_pets" name="cat_pets">
+                            <div class="slider-labels">
+                                <span>0</span>
+                                <span>1</span>
+                                <span>2</span>
+                                <span>3</span>
+                                <span>4</span>
+                                <span>5&gt;</span>
+                            </div>
+                        </div> 
+                    </div>
+                </div>       
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="age-included">Quantos anos seu pet tinha quando ele foi incluído na sua casa?</label>
+                    <div class="options">
+                        <label><input type="radio" name="age-included" value="<3 meses" required><span>&lt;3 meses</span></label>
+                        <label><input type="radio" name="age-included" value="3 a <6 meses" required><span>3 a &lt;6 meses</span></label>
+                        <label><input type="radio" name="age-included" value="6 a <9 meses" required><span>6 a &lt;9 meses</span></label>
+                        <label><input type="radio" name="age-included" value="9 meses a 1 ano" required><span>9 meses a 1 ano</span></label>
+                        <label><input type="radio" name="age-included" value="1 a <2 anos" required><span>1 a &lt;2 anos</span></label>
+                        <label><input type="radio" name="age-included" value="2 anos ou mais" required><span>2 anos ou mais</span></label>
+                        <label><input type="radio" name="age-included" value="não sei" required><span>Não sei</span></label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="neutered">Ele era castrado?</label>
+                    <div class="options">
+                        <label><input type="radio" name="castrated" value="sim" required><span>Sim</span></label>
+                        <label><input type="radio" name="castrated" value="não" required><span>Não</span></label>
+                        <label><input type="radio" name="castrated" value="não sei" required><span>Não sei</span></label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="age-neutered">Se sim, qual a idade dele ao ser castrado?</label>
+                    <div class="options">
+                        <label><input type="radio" name="age-neutered" value="<3 meses"><span>&lt;3 meses</span></label>
+                        <label><input type="radio" name="age-neutered" value="3 a <6 meses"><span>3 a &lt;6 meses</span></label>
+                        <label><input type="radio" name="age-neutered" value="6 a <9 meses"><span>6 a &lt;9 meses</span></label>
+                        <label><input type="radio" name="age-neutered" value="9 meses a 1 ano"><span>9 meses a 1 ano</span></label>
+                        <label><input type="radio" name="age-neutered" value="1 a <2 anos"><span>1 a &lt;2 anos</span></label>
+                        <label><input type="radio" name="age-neutered" value="2 anos ou mais"><span>2 anos ou mais</span></label>
+                        <label><input type="radio" name="age-neutered" value="não sei"><span>Não sei</span></label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="defined-breed">Seu pet tinha raça definida?</label>
+                    <div class="options">
+                        <label><input type="radio" name="defined-breed" value="sim" required><span>Sim</span></label>
+                        <label><input type="radio" name="defined-breed" value="não" required><span>Não</span></label>
+                        <label><input type="radio" name="defined-breed" value="mistura" required><span>Mistura de raças</span></label>
+                        <label><input type="radio" name="defined-breed" value="não sei" required><span>Não sei</span></label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="breed">Qual a raça?</label>
+                    <input type="text" class="form-control" id="breed" name="breed" required maxlength="50">
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="origin-criador">De onde veio o cachorro?</label>
+                    <div class="options">
+                        <label><input type="radio" name="where_came_from" value="criador" required><span>Criador</span></label>
+                        <label><input type="radio" name="where_came_from" value="amigo" required><span>Amigo</span></label>
+                        <label><input type="radio" name="where_came_from" value="abrigo" required><span>Abrigo</span></label>
+                        <label><input type="radio" name="where_came_from" value="vizinho" required><span>Vizinho</span></label>
+                        <label><input type="radio" name="where_came_from" value="nascido em casa" required><span>Nascido em casa</span></label>
+                        <label><input type="radio" name="where_came_from" value="encontrado como perdido" required><span>Encontrado como perdido</span></label>
+                        <label><input type="radio" name="where_came_from" value="loja de animais" required><span>Loja de animais</span></label>
+                        <label><input type="radio" name="where_came_from" value="online" required><span>On-line</span></label>
+                        <label><input type="radio" name="where_came_from" value="não sei" required><span>Não sei</span></label>
+                        <label><input type="radio" name="where_came_from" value="outro" required><span>Outro</span></label>
+                        <input type="text" class="form-control" id="where_came_from" name="other" placeholder="Especifique se outro">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="value-paid">Qual o valor pago pelo pet?</label>
+                    <div class="options">
+                        <label><input type="radio" name="pet_price" value="sem custo" required><span>Sem custo</span></label>
+                        <label><input type="radio" name="pet_price" value="50-150" required><span>50 - 150 reais</span></label>
+                        <label><input type="radio" name="pet_price" value="150-300" required><span>150 - 300 reais</span></label>
+                        <label><input type="radio" name="pet_price" value="300-500" required><span>300 - 500 reais</span></label>
+                        <label><input type="radio" name="pet_price" value="500-1000" required><span>500 - 1000 reais</span></label>
+                        <label><input type="radio" name="pet_price" value="1000-4000" required><span>1000 - 4000 reais</span></label>
+                        <label><input type="radio" name="pet_price" value="4000+" required><span>+4000 reais</span></label>
+                        <label><input type="radio" name="pet_price" value="não sei" required><span>Não sei</span></label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="reason">Por que você tinha esse cão?</label>
+                    <div class="options">
+                        <label><input type="radio" name="reason" value="companhia para criança" required><span>Companhia para criança</span></label>
+                        <label><input type="radio" name="reason" value="acompanhamento para adulto(s)" required><span>Acompanhamento para adulto(s)</span></label>
+                        <label><input type="radio" name="reason" value="por sua aparência" required><span>Por sua aparência</span></label>
+                        <label><input type="radio" name="reason" value="companhia para um cachorro que já mora na casa" required><span>Companhia para um cachorro que já mora na casa</span></label>
+                        <label><input type="radio" name="reason" value="ensinar responsabilidade às crianças" required><span>Ensinar responsabilidade às crianças</span></label>
+                        <label><input type="radio" name="reason" value="porque amigos já tinham" required><span>Porque amigos já tinham</span></label>
+                        <label><input type="radio" name="reason" value="para proteção da residência, de pessoas" required><span>Para proteção da residência, de pessoas</span></label>
+                        <label><input type="radio" name="reason" value="para ajudar um amigo/conhecido que não conseguiu ficar com o cachorro" required><span>Para ajudar um amigo/conhecido que não conseguiu ficar com o cachorro</span></label>
+                        <label><input type="radio" name="reason" value="para salvar sua vida" required><span>Para salvar sua vida</span></label>
+                        <label><input type="radio" name="reason" value="ele/ela era fofo e estava disponível ou foi um encantamento imediato" required><span>Ele/ela era fofo e estava disponível ou foi um encantamento imediato.</span></label>
+                        <label><input type="radio" name="reason" value="ele me escolheu" required><span>Ele me escolheu</span></label>
+                        <label><input type="radio" name="reason" value="ele/ela foi um presente" required><span>Ele/ela foi um presente</span></label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="traits" required>Quais características que o Pet tinha que o levaram a selecioná-lo ou concordar em mantê-lo?</label>
+                    <input type="text" class="form-control" id="traits" name="characteristics" required maxlength="250">
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="name-decision">Quem esteve envolvido na decisão do nome do cachorro?</label>
+                    <div class="button-options">
+                        <input type="radio" id="name-decision-voce" name="name_decision" value="você" class="click" required>
+                        <label class="button-resp-maior" for="name-decision-voce" required>Você</label>
+                        <input type="radio" id="name-decision-companheiro" name="name_decision" value="seu companheiro(a)" class="click" required>
+                        <label class="button-resp-maior" for="name-decision-companheiro" required>Seu companheiro(a)</label>
+                        <input type="radio" id="name-decision-familia" name="name_decision" value="toda a família (incluindo crianças)" class="click" required>
+                        <label class="button-resp-maior" for="name-decision-familia" required>Toda a família (incluindo crianças)</label>
+                        <input type="radio" id="name-decision-pais" name="name_decision" value="seus pais" class="click" required>
+                        <label class="button-resp-maior" for="name-decision-pais" required>Seus pais</label>
+                        <input type="radio" id="name-decision-pais-consulta" name="name_decision" value="seus pais em consulta com você" class="click" required>
+                        <label class="button-resp-maior" for="name-decision-pais-consulta" required>Seus pais em consulta com você</label>
+                        <input type="radio" id="name-decision-outro" name="name_decision" value="outro" class="click" required>
+                        <label class="button-resp-maior" for="name-decision-outro" required>Outro</label>
+                    </div>
+                </div>
+            </div>
+            
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="like-most" required>Pensando nas primeiras semanas depois da inclusão o que você gostava mais nele/ela?</label>
+                    <input type="text" class="form-control" id="like-most" name="most_like" required  maxlength="250">
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="dislike" required>O que você não gostava nele?</label>
+                    <input type="text" class="form-control" id="dislike" name="dont_like" required  maxlength="250">
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label>O pet foi ao veterinário enquanto esteve com você?</label>
+                    <div class="button-options">
+                        <input type="radio" id="vet-visit-sim" name="veterinary" value="sim" class="click" required>
+                        <label class="button-resp-maior" for="vet-visit-sim" required>Sim</label>
+                        <input type="radio" id="vet-visit-nao" name="veterinary" value="não" class="click" required>
+                        <label class="button-resp-maior" for="vet-visit-nao" required>Não</label>
+                        <input type="radio" id="vet-visit-ns" name="veterinary" value="não sei" class="click" required>
+                        <label class="button-resp-maior" for="vet-visit-ns" required>Não sei</label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="vet-reason" required>Quais os motivos?</label>
+                    <input type="text" class="form-control" id="vet-reason" name="vet-reason" required  maxlength="250">
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label>A quanto tempo você deixou de conviver com ele?</label>
+                    <div class="options">
+                        <label><input type="radio" name="time-away" value="até 6 meses" required><span>Até 6 meses</span></label>
+                        <label><input type="radio" name="time-away" value="de 6 meses a 1 ano" required><span>De 6 meses a 1 ano</span></label>
+                        <label><input type="radio" name="time-away" value="de 1 a 2 anos" required><span>De 1 a 2 anos</span></label>
+                        <label><input type="radio" name="time-away" value="de 2 a 5 anos" required><span>De 2 a 5 anos</span></label>
+                        <label><input type="radio" name="time-away" value="de 5 a 10 anos" required><span>De 5 a 10 anos</span></label>
+                        <label><input type="radio" name="time-away" value="mais de 10 anos" required><span>Mais de 10 anos</span></label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="age-at-time">Qual idade ele tinha na época?</label>
+                    <div class="options">
+                        <label><input type="radio" name="pet_age" value="até 6 meses" required><span>Até 6 meses</span></label>
+                        <label><input type="radio" name="pet_age" value="de 6 meses a 1 ano" required><span>De 6 meses a 1 ano</span></label>
+                        <label><input type="radio" name="pet_age" value="de 1 a 2 anos" required><span>De 1 a 2 anos</span></label>
+                        <label><input type="radio" name="pet_age" value="de 2 a 5 anos" required><span>De 2 a 5 anos</span></label>
+                        <label><input type="radio" name="pet_age" value="de 5 a 10 anos" required><span>De 5 a 10 anos</span></label>
+                        <label><input type="radio" name="pet_age" value="mais de 10 anos" required><span>Mais de 10 anos</span></label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="reasons-left" required>Por quais motivos você deixou de conviver com ele?</label>
+                    <input type="text" class="form-control" id="reasons-left" name="stopped_living" required  maxlength="250">
+                </div>
+            </div>
+    
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="new-dog" required>Você conviveria com um novo cão? Por quê?</label>
+                    <input type="text" class="form-control" id="new-dog" name="why" required  maxlength="250">
+                </div>
+            </div>
+
+            <!-- Campo oculto para user -->
+            <input type="hidden" id="user" name="user" value="1">
+    
+            <button class="buttonenv" type="submit">Enviar</button>
+    
+        </form>
+    </main>
+
+    <script>
+        window.onscroll = function () { updateProgressBar() };
+
+        function updateProgressBar() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        }
+
+        const rangeInputs = document.querySelectorAll('#time_with_you, #dog_pets, #cat_pets');
+
+        function updateRangeBackground(element) {
+            const value = (element.value - element.min) / (element.max - element.min) * 100;
+            element.style.setProperty('--value', value + '%');
+        }
+
+        rangeInputs.forEach(input => {
+            input.addEventListener('input', () => updateRangeBackground(input));
+            updateRangeBackground(input);
+        });
+
+        document.querySelectorAll('.button-group input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                const buttonGroup = this.closest('.button-group');
+                buttonGroup.querySelectorAll('.button-resp').forEach(label => {
+                    if (label.htmlFor === this.id) {
+                        label.style.backgroundColor = '#4A7757';
+                        label.style.color = '#ffffff';
+                    } else {
+                        label.style.backgroundColor = '#fffff8';
+                        label.style.color = '#325538';
+                    }
+                });
+            });
+        });
+
+        
+    </script>
+</body>
+</html>

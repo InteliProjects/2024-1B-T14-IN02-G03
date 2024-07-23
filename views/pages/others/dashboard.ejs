@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <!-- Meta tags essenciais para um documento HTML -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #fff;
+            border-bottom: 2px solid #325538;
+            padding: 1rem;
+        }
+
+        .navbar-brand img {
+            height: 35px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #325538;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .form-section {
+            background-color: #325538; /* Cor de fundo similar ao verde da imagem */
+            padding: 20px;
+            border-radius: 8px;
+            margin: 1rem 0;
+            color: #f0f0f0; /* Cor do texto */
+            max-width: 10000px;
+            margin-inline: auto;
+        }
+
+        .form-section h5 {
+            background-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .btn-group {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            border: none;
+            border-radius: 8px;
+            background-color: #e0dacd;
+            color: #325538;
+            padding: 10px 15px;
+            text-align: center;
+            box-shadow: none;
+        }
+
+        .btn-group .btn.active,
+        .btn-group .btn:active {
+            background-color: #325538;
+            color: #fff;
+        }
+
+        .btn-group-toggle .btn-group {
+            margin-bottom: 10px;
+        }
+
+        .dropdown-menu {
+            width: 100%;
+            border-radius: 8px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .dropdown-menu .dropdown-item {
+            padding: 10px 15px;
+            color: #325538;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #e0dacd;
+        }
+
+        .centralize-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            margin: 10px; /* Adiciona margem entre os gráficos */
+            margin-inline: auto;
+        }
+
+        .chart-container {
+            padding: 20px;
+            background-color: #556b4f; /* cor de fundo dos gráficos */
+            border-radius: 8px;
+            width: 100%;
+            height: 100%; /* Assegura que o gráfico ocupe toda a altura disponível */
+        }
+
+        .chart-container h5 {
+            color: #e6e6d9;
+            text-align: center;
+        }
+
+        .download-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-download {
+            background-color: #325538; /* Cor verde do site */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-download:hover {
+            background-color: #27422e; /* Cor verde mais escura ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">
+            <img src="/images/abandono-zero.png" alt="Logo Abandono Zero">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sobre Nós</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Participe da Pesquisa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Recursos Educativos</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Formulário -->
+    <div class="container mt-5">
+        <div class="form-section">
+            <h5>Formulários:</h5>
+            <div class="btn-group-toggle" data-toggle="buttons">
+                <!-- Botões do Formulário -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos Lado a Lado -->
+    <div class="container">
+        <div class="row">
+            <!-- Gráfico de Pizza -->
+            <div class="col-lg-12 col-md-12 centralize-container">
+                <div class="chart-container">
+                    <h5>Gráfico de Pizza</h5>
+                    <div id="myPieChart" style="width:100%; height:300px;"></div> <!-- Defina a altura do gráfico -->
+                </div>
+            </div>
+            <!-- Gráfico de Linha -->
+            <div class="col-lg-6 col-md-12 centralize-container">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão de Download -->
+    <div class="container download-button-container">
+        <button type="button" class="btn-download">Download Relatório</button>
+    </div>
+
+    <!-- Scripts do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script para Google Charts -->
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        var hadDogForms = JSON.stringify(hadDogForms);
+        var haveForms = JSON.stringify(haveForms);
+        var nullForms = JSON.stringify(nullForms);
+        var wantForms = JSON.stringify(wantForms);
+
+        async function requireReportData() {
+            try {
+                const response = await require("../api/controllers/Dashboard/QtdResp");
+                const data = await response.json();
+                return data.reportCount;
+            } catch (error) {
+                console.error('Error fetching report data:', error);
+                return 0; // Retorna 0 se houver erro na busca
+            }
+        }
+
+        console.log(requireReportData())
+
+        async function drawChart() {
+            // Busque os dados do backend
+            //const reportCount = await ReportData();
+            console.log("Passou")
+            var data = google.visualization.arrayToDataTable([
+                ['Status', 'Percentual'],
+                ['Já tive', 14],
+                ['Quero ter', 26],
+                ['Tenho', 55],
+                ['Null', 20]
+            ]);
+
+            var options = {
+                title: 'Relatório Geral',
+                backgroundColor: '#556b4f', // Cor de fundo
+                titleTextStyle: {
+                    color: '#e6e6d9' // Cor do título
+                },
+                legend: {
+                    textStyle: {
+                        color: '#e6e6d9' // Cor da legenda
+                    }
+                },
+                chartArea: {
+                    left: 40, top: 40, width: '80%', height: '80%'
+                },
+                width: '100%',
+                height: '100%',
+                responsive: true
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
+            chart.draw(data, options);
+
+            // Redesenhar o gráfico quando a janela for redimensionada
+            window.addEventListener('resize', function() {
+                chart.draw(data, options);
+            });
+        }
+    </script>
+</body>
+</html>
